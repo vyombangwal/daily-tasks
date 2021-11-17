@@ -1,17 +1,11 @@
 import React, { useState } from "react";
-import Tasklist from "./Tasklist";
 import Add from "./Svg/add.svg";
 import AddTask from "./AddTask";
+import TaskList from "./TaskList";
 
 const Index = (props) => {
   const [showForm, setShowForm] = useState(false);
   const tasks = props.items;
-  const completed = tasks.map((task) => {
-    return task.isCompleted && <Tasklist value={task} />;
-  });
-  const pending = tasks.map((task) => {
-    return !task.isCompleted && <Tasklist value={task} />;
-  });
   return (
     <div className="p-12">
       <div className="justify-center">Tasks Management</div>
@@ -26,11 +20,11 @@ const Index = (props) => {
             <AddTask trigger={showForm} setTrigger={setShowForm} />
           </div>
 
-          <div>{pending}</div>
+          <TaskList isCompleted={false} tasks={tasks} />
         </div>
         <div className="m-4">
           <h2 className="font-bold text-left mb-4">Completed</h2>
-          <div>{completed}</div>
+          <TaskList isCompleted={true} tasks={tasks} />
         </div>
       </div>
     </div>
