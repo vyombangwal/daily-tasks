@@ -1,9 +1,10 @@
 import "./App.css";
-import React from "react";
+import React, { useState } from "react";
 import Index from "./Components/Index";
+import { TasksContextProvider } from "./Components/TaskContext";
 
 function App() {
-  const tasks = [
+  const defaultTasks = [
     {
       name: "task 1",
       description: "description is mentioned here",
@@ -40,9 +41,18 @@ function App() {
       isCompleted: false,
     },
   ];
+  const [tasks, setTasks] = useState(defaultTasks);
+  const addTaskHandler = (taskData) => {
+    setTasks([taskData, ...tasks]);
+  };
+
   return (
     <div className="App h-screen bg-gray-100 font-sans">
-      <Index items={tasks} />
+      <TasksContextProvider value={{ tasks: tasks, addTaskHandler }}>
+        <div>
+          <Index items={tasks} />
+        </div>
+      </TasksContextProvider>
     </div>
   );
 }
