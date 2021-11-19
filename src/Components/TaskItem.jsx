@@ -7,12 +7,12 @@ import Check from "./Svg/checked.svg";
 const TaskItem = (props) => {
   return (
     <Card className="bg-white p-4 text-gray-400">
-      <div>
-        <div className="inline-block text-left p-2">
-          <div className="text-2xl">{props.value.name}</div>
+      <div className="grid grid-rows grid-cols-4">
+        <div className="row-span-2 col-span-3 p-2 text-left">
+          <div className="text-2xl ">{props.value.name}</div>
           <div>{props.value.description}</div>
         </div>
-        <div className="inline-block">
+        <div className="col-span-1 p-2 ">
           {props.value.isCompleted ? (
             <button>
               <img src={Check} alt="check" />
