@@ -1,5 +1,4 @@
-import React from "react";
-import { useContext, useState } from "react/cjs/react.development";
+import React, { useContext, useState } from "react";
 import Card from "./Card.jsx";
 import PrimaryButton from "./PrimaryButton.jsx";
 import Close from "./Svg/close.svg";
@@ -16,14 +15,14 @@ const AddTask = ({ trigger, setTrigger }) => {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    const taskdata = {
+    tasks.addTaskHandler({
       name: taskName,
       description: description,
       isCompleted: false,
-    };
-    tasks.addTaskHandler(taskdata);
+    });
     setTaskName("");
     setDescription("");
+    setTrigger(false);
   };
   return (
     trigger && (
