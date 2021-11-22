@@ -29,10 +29,9 @@ const TaskItem = ({ value, taskIndex }) => {
           <div className="text-2xl ">{value.name}</div>
           <div>{value.description}</div>
         </div>
-        <div className="col-span-2 p-2 ">
+        <div className="col-span-2 p-2 items-center flex">
           <button onClick={() => setShowForm(true)}>
-            <img src={Edit} alt="edit" />
-            Edit
+            <img className="h-12 p-2" src={Edit} alt="edit" />
           </button>
           <EditTask
             trigger={showForm}
