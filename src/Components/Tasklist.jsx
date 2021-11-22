@@ -1,14 +1,12 @@
 import React from "react";
 import TaskItem from "./TaskItem";
 
-const TaskList = ({ isCompleted, tasks }) => {
-  const pending = tasks.map((task) => {
-    return !task.isCompleted && <TaskItem value={task} />;
-  });
-  const completed = tasks.map((task) => {
-    return task.isCompleted && <TaskItem value={task} />;
-  });
-  return isCompleted ? <div>{completed}</div> : <div>{pending}</div>;
-};
+const TaskList = ({ isCompleted, tasks }) =>
+  tasks.map(
+    (task, index) =>
+      isCompleted === task.isCompleted && (
+        <TaskItem key={index} taskIndex={index} value={task} />
+      )
+  );
 
 export default TaskList;
