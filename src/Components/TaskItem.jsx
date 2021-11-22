@@ -3,6 +3,8 @@ import Card from "./Card";
 import "./Card.css";
 import Uncheck from "./Svg/uncheck.svg";
 import Check from "./Svg/checked.svg";
+import Edit from "./Svg/edit.svg";
+
 import EditTask from "./EditTask";
 import TasksContext from "./TaskContext";
 
@@ -28,7 +30,10 @@ const TaskItem = ({ value, taskIndex }) => {
           <div>{value.description}</div>
         </div>
         <div className="col-span-2 p-2 ">
-          <button onClick={() => setShowForm(true)}>edit</button>
+          <button onClick={() => setShowForm(true)}>
+            <img src={Edit} alt="edit" />
+            Edit
+          </button>
           <EditTask
             trigger={showForm}
             setTrigger={setShowForm}
