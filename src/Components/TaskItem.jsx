@@ -4,12 +4,13 @@ import "./Card.css";
 import Uncheck from "./Svg/uncheck.svg";
 import Check from "./Svg/checked.svg";
 import Edit from "./Svg/edit.svg";
+import Delete from "./Svg/delete.svg";
 
 import EditTask from "./EditTask";
 import TasksContext from "./TaskContext";
 
 const TaskItem = ({ value, taskIndex }) => {
-  const { editTaskHandler } = useContext(TasksContext);
+  const { editTaskHandler, deleteTaskHandler } = useContext(TasksContext);
 
   const [showForm, setShowForm] = useState(false);
   const statusChangeHandler = (event) =>
@@ -21,6 +22,7 @@ const TaskItem = ({ value, taskIndex }) => {
       },
       taskIndex
     );
+  const deleteChangeHandler = (event) => deleteTaskHandler(taskIndex);
 
   return (
     <Card className="bg-white p-4 ">
@@ -30,9 +32,12 @@ const TaskItem = ({ value, taskIndex }) => {
           <div>{value.description}</div>
         </div>
         <div className="col-span-2 p-2 ">
-          <button onClick={() => setShowForm(true)}>
+          <button className="p-1" onClick={() => setShowForm(true)}>
             <img src={Edit} alt="edit" />
             Edit
+          </button>
+          <button className="p-1" onClick={deleteChangeHandler}>
+            <img src={Delete} alt="delete" />
           </button>
           <EditTask
             trigger={showForm}
@@ -44,7 +49,7 @@ const TaskItem = ({ value, taskIndex }) => {
           />
 
           {value.isCompleted ? (
-            <button onClick={statusChangeHandler}>
+            <button className="p-1" onClick={statusChangeHandler}>
               <img src={Check} alt="check" />
             </button>
           ) : (
