@@ -52,11 +52,23 @@ function App() {
       setTasks([taskdata, ...tasksNew]);
     }
   };
+  const deleteTaskHandler = (taskIndex) => {
+    let tasksNew = [...tasks];
+    if (taskIndex !== -1) {
+      tasksNew.splice(taskIndex, 1);
+      setTasks([...tasksNew]);
+    }
+  };
 
   return (
     <div className="App h-screen bg-gray-100 font-sans">
       <TasksContextProvider
-        value={{ tasks: tasks, addTaskHandler, editTaskHandler }}
+        value={{
+          tasks: tasks,
+          addTaskHandler,
+          editTaskHandler,
+          deleteTaskHandler,
+        }}
       >
         <div>
           <Index items={tasks} />
