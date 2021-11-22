@@ -31,10 +31,9 @@ const TaskItem = ({ value, taskIndex }) => {
           <div className="text-2xl ">{value.name}</div>
           <div>{value.description}</div>
         </div>
-        <div className="col-span-2 p-2 ">
-          <button className="p-1" onClick={() => setShowForm(true)}>
-            <img src={Edit} alt="edit" />
-            Edit
+        <div className="col-span-2 p-2 items-center flex">
+          <button onClick={() => setShowForm(true)}>
+            <img className="h-12 p-2" src={Edit} alt="edit" />
           </button>
           <button className="p-1" onClick={deleteChangeHandler}>
             <img src={Delete} alt="delete" />
