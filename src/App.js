@@ -45,10 +45,19 @@ function App() {
   const addTaskHandler = (taskData) => {
     setTasks([taskData, ...tasks]);
   };
+  const editTaskHandler = (taskdata, taskIndex) => {
+    let tasksNew = [...tasks];
+    if (taskIndex !== -1) {
+      tasksNew.splice(taskIndex, 1);
+      setTasks([taskdata, ...tasksNew]);
+    }
+  };
 
   return (
     <div className="App h-screen bg-gray-100 font-sans">
-      <TasksContextProvider value={{ tasks: tasks, addTaskHandler }}>
+      <TasksContextProvider
+        value={{ tasks: tasks, addTaskHandler, editTaskHandler }}
+      >
         <div>
           <Index items={tasks} />
         </div>
