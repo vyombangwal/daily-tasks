@@ -31,8 +31,8 @@ const Login = () => {
   };
   return (
     <div className="pt-20">
-      <Card className="w-80 mx-auto my-auto relative justify-items-center">
-        <form className="bg-white w-80  border border-1 mx-auto justify-center">
+      <Card className="w-40 md:w-80  mx-auto my-auto  justify-items-center">
+        <form className="bg-white w-40 md:w-80 border border-1 mx-auto justify-center">
           <div className="pt-2 pb-4">
             <div className="flex justify-center p-2">
               <h1 className="font-bold ">Login</h1>
