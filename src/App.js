@@ -1,7 +1,8 @@
 import "./App.css";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Index from "./Components/Index";
 import { TasksContextProvider } from "./Components/TaskContext";
+import Login from "./Login";
 
 function App() {
   const defaultTasks = [
@@ -41,6 +42,7 @@ function App() {
       isCompleted: false,
     },
   ];
+  const [token, setToken] = useState(null);
   const [tasks, setTasks] = useState(defaultTasks);
   const addTaskHandler = (taskData) => {
     setTasks([taskData, ...tasks]);
@@ -59,6 +61,9 @@ function App() {
       setTasks([...tasksNew]);
     }
   };
+  const editTokenHandler = (rawToken) => {
+    rawToken === undefined ? setToken(null) : setToken(rawToken);
+  };
 
   return (
     <div className="App h-screen bg-gray-100 font-sans">
@@ -68,11 +73,10 @@ function App() {
           addTaskHandler,
           editTaskHandler,
           deleteTaskHandler,
+          editTokenHandler,
         }}
       >
-        <div>
-          <Index items={tasks} />
-        </div>
+        {token === null ? <Login /> : <Index items={tasks} />}
       </TasksContextProvider>
     </div>
   );

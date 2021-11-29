@@ -6,7 +6,7 @@ const PrimaryButton = (props) => {
     props.className;
   return (
     <div>
-      <button type={props.type} className={classes}>
+      <button type={props.type} className={classes} onClick={props.onClick}>
         {props.value}
       </button>
     </div>
