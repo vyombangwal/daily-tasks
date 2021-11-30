@@ -2,6 +2,7 @@ import "./App.css";
 import React, { useState } from "react";
 import Index from "./Components/Index";
 import { TasksContextProvider } from "./Components/TaskContext";
+import Login from "./Login";
 
 function App() {
   const defaultTasks = [
@@ -41,6 +42,7 @@ function App() {
       isCompleted: false,
     },
   ];
+  const [token, setToken] = useState(null);
   const [tasks, setTasks] = useState(defaultTasks);
   const addTaskHandler = (taskData) => {
     setTasks([taskData, ...tasks]);
@@ -59,6 +61,22 @@ function App() {
       setTasks([...tasksNew]);
     }
   };
+  const updateTokenHandler = (rawToken) => {
+    rawToken === undefined ? setToken(null) : setToken(rawToken);
+    const url = "http://daily-tasks.test/api/data";
+    const auth = "Bearer " + rawToken;
+    const headers = {
+      Authorization: auth,
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    };
+    fetch(url, {
+      method: "GET",
+      headers,
+    })
+      .then((response) => response.json())
+      .then((response) => console.log(response));
+  };
 
   return (
     <div className="App h-screen bg-gray-100 font-sans">
@@ -68,11 +86,10 @@ function App() {
           addTaskHandler,
           editTaskHandler,
           deleteTaskHandler,
+          updateTokenHandler,
         }}
       >
-        <div>
-          <Index items={tasks} />
-        </div>
+        {token === null ? <Login /> : <Index items={tasks} />}
       </TasksContextProvider>
     </div>
   );
