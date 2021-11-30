@@ -18,8 +18,8 @@ const Login = () => {
       Accept: "application/json",
     };
     let body = {
-      userid: "vyombangwal@gmail.com",
-      password: "Spideraryan23",
+      userid: email,
+      password: password,
     };
     fetch(url, {
       method: "POST",
