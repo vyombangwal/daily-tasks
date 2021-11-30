@@ -4,7 +4,7 @@ import PrimaryButton from "./Components/PrimaryButton";
 import TasksContext from "./Components/TaskContext";
 
 const Login = () => {
-  const { editTokenHandler } = useContext(TasksContext);
+  const { updateTokenHandler } = useContext(TasksContext);
 
   const [email, SetEmail] = useState("");
   const [password, SetPassword] = useState("");
@@ -18,8 +18,8 @@ const Login = () => {
       Accept: "application/json",
     };
     let body = {
-      userid: email,
-      password: password,
+      userid: "vyombangwal@gmail.com",
+      password: "Spideraryan23",
     };
     fetch(url, {
       method: "POST",
@@ -27,7 +27,7 @@ const Login = () => {
       body: JSON.stringify(body),
     })
       .then((response) => response.json())
-      .then((response) => editTokenHandler(response.token));
+      .then((response) => updateTokenHandler(response.token));
   };
   return (
     <div className="pt-20">

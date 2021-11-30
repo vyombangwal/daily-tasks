@@ -61,8 +61,21 @@ function App() {
       setTasks([...tasksNew]);
     }
   };
-  const editTokenHandler = (rawToken) => {
+  const updateTokenHandler = (rawToken) => {
     rawToken === undefined ? setToken(null) : setToken(rawToken);
+    const url = "http://daily-tasks.test/api/data";
+    const auth = "Bearer " + rawToken;
+    const headers = {
+      Authorization: auth,
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    };
+    fetch(url, {
+      method: "GET",
+      headers,
+    })
+      .then((response) => response.json())
+      .then((response) => console.log(response));
   };
 
   return (
@@ -73,7 +86,7 @@ function App() {
           addTaskHandler,
           editTaskHandler,
           deleteTaskHandler,
-          editTokenHandler,
+          updateTokenHandler,
         }}
       >
         {token === null ? <Login /> : <Index items={tasks} />}
