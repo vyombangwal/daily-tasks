@@ -1,49 +1,14 @@
 import "./App.css";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Index from "./Components/Index";
 import { TasksContextProvider } from "./Components/TaskContext";
 import Login from "./Login";
 
 function App() {
-  const defaultTasks = [
-    {
-      name: "task 1",
-      description: "description is mentioned here",
-      isCompleted: true,
-    },
-    {
-      name: "task 2",
-      description: "description is mentioned here",
-      isCompleted: true,
-    },
-    {
-      name: "task 21",
-      description: "description is mentioned here",
-      isCompleted: true,
-    },
-    {
-      name: "task 3",
-      description: "description is mentioned here",
-      isCompleted: true,
-    },
-    {
-      name: "task 4",
-      description: "description is mentioned here",
-      isCompleted: true,
-    },
-    {
-      name: "task 5",
-      description: "description is mentioned here",
-      isCompleted: false,
-    },
-    {
-      name: "task 6",
-      description: "description is mentioned here",
-      isCompleted: false,
-    },
-  ];
   const [token, setToken] = useState(null);
-  const [tasks, setTasks] = useState(defaultTasks);
+  const [tasks, setTasks] = useState([]);
+  const [isLoading, setLoaded] = useState(true);
+
   const addTaskHandler = (taskData) => {
     setTasks([taskData, ...tasks]);
   };
@@ -61,10 +26,44 @@ function App() {
       setTasks([...tasksNew]);
     }
   };
-  const editTokenHandler = (rawToken) => {
+  const updateTokenHandler = (rawToken) => {
     rawToken === undefined ? setToken(null) : setToken(rawToken);
+    const url = "http://daily-tasks.test/api/data";
+
+    const headers = {
+      Authorization: "Bearer " + rawToken,
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    };
+
+    fetch(url, {
+      method: "GET",
+      headers,
+    })
+      .then((response) => response.json())
+      .then((response) => filterTask(response.tasks));
   };
 
+  const filterTask = (tasksnew) => {
+    var tasksNew = [];
+    tasksnew.completed.map((items) =>
+      tasksNew.push({
+        name: items.name,
+        description: items.description,
+        isCompleted: true,
+      })
+    );
+    tasksnew.pending.map((items) =>
+      tasksNew.push({
+        name: items.name,
+        description: items.description,
+        isCompleted: false,
+      })
+    );
+    setTasks(tasksNew);
+    setLoaded(false);
+  };
+  if (isLoading && token !== null) return <h1>Loading...</h1>;
   return (
     <div className="App h-screen bg-gray-100 font-sans">
       <TasksContextProvider
@@ -73,7 +72,7 @@ function App() {
           addTaskHandler,
           editTaskHandler,
           deleteTaskHandler,
-          editTokenHandler,
+          updateTokenHandler,
         }}
       >
         {token === null ? <Login /> : <Index items={tasks} />}

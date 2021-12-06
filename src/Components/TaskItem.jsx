@@ -29,6 +29,7 @@ const TaskItem = ({ value, taskIndex }) => {
       <div className="grid grid-rows grid-cols-5">
         <div className="row-span-2 col-span-3 p-2 text-left text-gray-400">
           <div className="text-2xl ">{value.name}</div>
+
           <div>{value.description}</div>
         </div>
         <div className="col-span-2 p-2 items-center flex">
