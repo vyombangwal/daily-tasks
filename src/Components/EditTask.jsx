@@ -11,6 +11,7 @@ const EditTask = ({
   isCompleted,
   prevDescription,
   index,
+  id,
 }) => {
   const { editTaskHandler } = useContext(TasksContext);
   const [taskName, setTaskName] = useState(name);
@@ -27,6 +28,7 @@ const EditTask = ({
         name: taskName,
         description: description,
         isCompleted: isCompleted,
+        id: id,
       },
       index
     );

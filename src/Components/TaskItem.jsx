@@ -10,15 +10,16 @@ import EditTask from "./EditTask";
 import TasksContext from "./TaskContext";
 
 const TaskItem = ({ value, taskIndex }) => {
-  const { editTaskHandler, deleteTaskHandler } = useContext(TasksContext);
+  const { deleteTaskHandler, updateStatusHandler } = useContext(TasksContext);
 
   const [showForm, setShowForm] = useState(false);
   const statusChangeHandler = (event) =>
-    editTaskHandler(
+    updateStatusHandler(
       {
         name: value.name,
         description: value.description,
         isCompleted: !value.isCompleted,
+        id: value.id,
       },
       taskIndex
     );
@@ -46,6 +47,7 @@ const TaskItem = ({ value, taskIndex }) => {
             isCompleted={value.isCompleted}
             prevDescription={value.description}
             index={taskIndex}
+            id={value.id}
           />
 
           {value.isCompleted ? (

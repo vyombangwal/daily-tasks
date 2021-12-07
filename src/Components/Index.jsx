@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Add from "./Svg/add.svg";
 import AddTask from "./AddTask";
-import TaskList from "./TaskList";
+import TaskList from "./Tasklist";
 
 const Index = (props) => {
   const [showForm, setShowForm] = useState(false);
