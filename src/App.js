@@ -5,6 +5,7 @@ import { TasksContextProvider } from "./Components/TaskContext";
 import Login from "./Login";
 
 function App() {
+  const apiHost = process.env.REACT_APP_apiHost;
   const [token, setToken] = useState(null);
   const [tasks, setTasks] = useState([]);
   const [isLoading, setLoaded] = useState(true);
@@ -28,7 +29,7 @@ function App() {
   };
   const updateTokenHandler = (rawToken) => {
     rawToken === undefined ? setToken(null) : setToken(rawToken);
-    const url = "http://daily-tasks.test/api/data";
+    const url = apiHost + "/api/data";
 
     const headers = {
       Authorization: "Bearer " + rawToken,
