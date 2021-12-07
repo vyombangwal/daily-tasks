@@ -5,45 +5,11 @@ import { TasksContextProvider } from "./Components/TaskContext";
 import Login from "./Login";
 
 function App() {
-  const defaultTasks = [
-    {
-      name: "task 1",
-      description: "description is mentioned here",
-      isCompleted: true,
-    },
-    {
-      name: "task 2",
-      description: "description is mentioned here",
-      isCompleted: true,
-    },
-    {
-      name: "task 21",
-      description: "description is mentioned here",
-      isCompleted: true,
-    },
-    {
-      name: "task 3",
-      description: "description is mentioned here",
-      isCompleted: true,
-    },
-    {
-      name: "task 4",
-      description: "description is mentioned here",
-      isCompleted: true,
-    },
-    {
-      name: "task 5",
-      description: "description is mentioned here",
-      isCompleted: false,
-    },
-    {
-      name: "task 6",
-      description: "description is mentioned here",
-      isCompleted: false,
-    },
-  ];
+  const apiHost = process.env.REACT_APP_apiHost;
   const [token, setToken] = useState(null);
-  const [tasks, setTasks] = useState(defaultTasks);
+  const [tasks, setTasks] = useState([]);
+  const [isLoading, setLoaded] = useState(true);
+
   const addTaskHandler = (taskData) => {
     setTasks([taskData, ...tasks]);
   };
@@ -63,21 +29,42 @@ function App() {
   };
   const updateTokenHandler = (rawToken) => {
     rawToken === undefined ? setToken(null) : setToken(rawToken);
-    const url = "http://daily-tasks.test/api/data";
-    const auth = "Bearer " + rawToken;
+    const url = apiHost + "/api/data";
+
     const headers = {
-      Authorization: auth,
+      Authorization: "Bearer " + rawToken,
       "Content-Type": "application/json",
       Accept: "application/json",
     };
+
     fetch(url, {
       method: "GET",
       headers,
     })
       .then((response) => response.json())
-      .then((response) => console.log(response));
+      .then((response) => filterTask(response.tasks));
   };
 
+  const filterTask = (tasksnew) => {
+    var tasksNew = [];
+    tasksnew.completed.map((items) =>
+      tasksNew.push({
+        name: items.name,
+        description: items.description,
+        isCompleted: true,
+      })
+    );
+    tasksnew.pending.map((items) =>
+      tasksNew.push({
+        name: items.name,
+        description: items.description,
+        isCompleted: false,
+      })
+    );
+    setTasks(tasksNew);
+    setLoaded(false);
+  };
+  if (isLoading && token !== null) return <h1>Loading...</h1>;
   return (
     <div className="App h-screen bg-gray-100 font-sans">
       <TasksContextProvider
