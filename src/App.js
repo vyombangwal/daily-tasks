@@ -10,8 +10,7 @@ function App() {
   const [tasks, setTasks] = useState([]);
   const [isLoading, setLoaded] = useState(true);
 
-  const addTaskHandler = (taskData) => {
-    setTasks([taskData, ...tasks]);
+  const addTaskHandler = async (taskData) => {
     const url = apiHost + "/api/task/store";
     const headers = {
       Authorization: "Bearer " + token,
@@ -24,11 +23,14 @@ function App() {
       taskdescription: taskData.description,
     };
 
-    fetch(url, {
+    const response = await fetch(url, {
       method: "POST",
       headers,
       body: JSON.stringify(body),
-    }).then((response) => response.json());
+    })
+      .then((response) => response.json())
+      .then((response) => response);
+    updateTokenHandler(token, response);
   };
   const editTaskHandler = (taskdata, taskIndex) => {
     let tasksNew = [...tasks];
@@ -85,7 +87,7 @@ function App() {
       headers,
     }).then((response) => response.json());
   };
-  const updateTokenHandler = (rawToken) => {
+  const updateTokenHandler = (rawToken, res) => {
     rawToken === undefined ? setToken(null) : setToken(rawToken);
     const url = apiHost + "/api/data";
 
@@ -101,6 +103,7 @@ function App() {
     })
       .then((response) => response.json())
       .then((response) => filterTask(response.tasks));
+    setLoaded(true);
   };
 
   const filterTask = (tasksnew) => {
@@ -121,7 +124,6 @@ function App() {
         id: items.id,
       })
     );
-    console.log(tasksNew);
     setTasks(tasksNew);
     setLoaded(false);
   };
